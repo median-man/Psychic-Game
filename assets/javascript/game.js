@@ -22,23 +22,30 @@ function newRound() {
 document.onkeyup = function(event) {
 	var letterGuessed;
 
-	// letterGuessed = event.key to lowercase
+	letterGuessed = event.key.toLowerCase();
 
 	// if event.key is in lettersUsed then
-		// tell user the letter has been used
+	if ( lettersUsed.indexOf(letterGuessed) > -1 ) {
+		alert("You already used " + letterGuessed + ".");
 
 	// else if event.key lowercase === solution 
-		// then game is won, increment wins
-		// start new round
-
+	} else if ( letterGuessed === solution ) {
+		// then game is won
+		wins++;
+		newRound();		
+	
 	// else decrement guessesLeft
+	} else {
+		guessesLeft++;
+		lettersUsed.push(letterGuessed);
+	}
 
-	// if guessesLeft === 0 then
+	if ( guessesLeft === 0 ) {
 		// the game is lost, increment losses and start new round
+		losses++;
+		newRound();
+	}
 
 
-
-
-
-
+	// update display
 };
