@@ -7,45 +7,58 @@ newRound();
 
 // returns a random letter from the alphabet
 function getRandomLetter() {
-	// "a".charCodeAt() = 97
-	// random number from 97 to 122 inclusive
+	// random number for charCodes for a to z inclusive
 	var code = Math.floor(Math.random() * (26)) + 97; 
 	return String.fromCharCode(code);
 }
 
-function newRound() {
-	guessesLeft = 9;
-	solution = getRandomLetter();
-	lettersUsed = [];
-}
-
-document.onkeyup = function(event) {
-	var letterGuessed;
-
-	letterGuessed = event.key.toLowerCase();
-
+// main function for game that handles a guess from player
+function handleGuess(guessedLetter) {
 	// if event.key is in lettersUsed then
-	if ( lettersUsed.indexOf(letterGuessed) > -1 ) {
-		alert("You already used " + letterGuessed + ".");
+	if ( lettersUsed.indexOf(guessedLetter) > -1 ) {
+		alert("You already used " + guessedLetter + ".");
 
 	// else if event.key lowercase === solution 
-	} else if ( letterGuessed === solution ) {
+	} else if ( guessedLetter === solution ) {
+		console.log("game won");
 		// then game is won
 		wins++;
-		newRound();		
-	
+		newRound();			
 	// else decrement guessesLeft
 	} else {
-		guessesLeft++;
-		lettersUsed.push(letterGuessed);
+		guessesLeft--;
+		lettersUsed.push(guessedLetter);
 	}
-
 	if ( guessesLeft === 0 ) {
 		// the game is lost, increment losses and start new round
 		losses++;
 		newRound();
 	}
 
-
 	// update display
+	updateView(wins, losses, guessesLeft, lettersUsed);
+}
+
+// resets values for a new round
+function newRound() {
+	guessesLeft = 9;
+	solution = getRandomLetter();
+	lettersUsed = [];
+}
+
+// updates data displayed on page
+function updateView(w, l, remGuesses, arrLetters) {
+	// join array with commas before rendering
+	document.querySelector("#letters-used").textContent = arrLetters.join(", ");
+	document.querySelector("#wins").textContent = w;
+	document.querySelector("#losses").textContent = l;
+	document.querySelector("#guesses-left").textContent = remGuesses;
+}
+
+// runs game when key is pressed
+document.onkeyup = function(event) {
+	// key pressed is a to z inclusive
+	if ( event.keyCode >= 65 && event.keyCode <= 90 ) {
+		handleGuess(event.key.toLowerCase());
+	}
 };
