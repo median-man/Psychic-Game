@@ -1,0 +1,11 @@
+/* Used Letter Styles */
+.letter {
+  margin: 0 2px;
+  font-size: 1em;
+}
+.letter:first-child {
+  margin-left: 0;
+}
+.letter:last-child {
+  margin-right: 0;
+}
