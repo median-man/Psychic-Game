@@ -1,7 +1,14 @@
+.container {
+  max-width: 600px; 
+}
+
 /* Used Letter Styles */
 .letter {
   margin: 0 2px;
   font-size: 1em;
+  width: 25px;
+  display: inline-block;
+  text-align: center;
 }
 .letter:first-child {
   margin-left: 0;
