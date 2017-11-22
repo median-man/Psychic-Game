@@ -3,7 +3,7 @@ var guessesLeft = 0;
 var lettersUsed = [];
 var losses = 0;
 var max_guesses = 9;
-var solution = "";
+var solution = '';
 var wins = 0;
 
 // returns a random letter from the alphabet
@@ -17,7 +17,7 @@ function handleGuess(guessedLetter) {
   // compare the guess letter with the solution and
   // the previously guessed letters
 	if ( lettersUsed.indexOf(guessedLetter) > -1 ) {
-    alert("You already used " + guessedLetter + ".");
+    alert('You already used ' + guessedLetter + '.');
 	} else if ( guessedLetter === solution ) {
 		wins++;
 		newRound();
@@ -45,10 +45,20 @@ function newRound() {
 
 // updates data displayed on page
 function updateView(wins, losses, remGuesses, arrLetters) {
-	document.querySelector("#letters-used").textContent = arrLetters.join(", ");
-	document.querySelector("#wins").textContent = wins;
-	document.querySelector("#losses").textContent = losses;
-	document.querySelector("#guesses-left").textContent = remGuesses;
+  var lettersUsedElement = document.getElementById('letters-used');
+  lettersUsedElement.innerHTML = '';
+  arrLetters.forEach(function (letter) {
+    appendLetterElement(letter, lettersUsedElement);
+  });
+	// document.querySelector('#letters-used').textContent = arrLetters.join(', ');
+	document.querySelector('#wins').textContent = wins;
+	document.querySelector('#losses').textContent = losses;
+	document.querySelector('#guesses-left').textContent = remGuesses;
+}
+
+// appends a letter element to container
+function appendLetterElement(letter, container) {
+  container.innerHTML = container.innerHTML + '<span class="letter label label-default text-uppercase">' + letter + '</span>';
 }
 
 // runs game when key is pressed
